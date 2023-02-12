@@ -1,6 +1,38 @@
-# Fantasy Football Draft Scoring and Prediction Project
+# Fantasy Football Helper App
 
-## A complete single page application using a REST API for the backend and Vue.js for the frontend.
+A complete single page application using a REST API for the backend and Vue.js for the frontend.
 
-This will be ready to deploy on a web server and will
-allowe users to retrieve fantasy football related data to assist with drafts and potential offseason moves.
+## Description
+This will be ready to deploy on a web server and will allow users to retrieve fantasy football related data to 
+assist with drafts and potential offseason moves.
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [ ] Add fantasy web scraper to the repo
+- [ ] Add initial API endpoints to retrieve the complete list of eligible fantasy players
+- [ ] Add initial Vue.js framework to fetch data from the above API endpoint
+- [ ] Initialize web server to host the github repository
+- [ ] Potentially add a domain name for the web server
+
+
+## Authors
+
+Contributors names and contact info
+
+ex. Tyler Bakely
+ex. [@tbakely](https://twitter.com/tbakely)
+
+## Version History
+
+* 0.01
+    * Initial repo setup
+
+## License
+
+* SOON TM
+
+## Acknowledgments
+
+Inspiration, code snippets, etc.
+* SOON TM
