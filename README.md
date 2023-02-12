@@ -20,8 +20,8 @@ assist with drafts and potential offseason moves.
 
 Contributors names and contact info
 
-ex. Tyler Bakely
-ex. [@tbakely](https://twitter.com/tbakely)
+* Tyler Bakely
+* SOON TM CONTACT INFO SOON TM
 
 ## Version History
 
