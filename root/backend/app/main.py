@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.routers import players
+import psycopg2
 
 app = FastAPI()
 
