@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter
+from app.schemas import Player
 import psycopg2
 
 while True:
@@ -18,4 +19,15 @@ router = APIRouter(prefix="/players", tags=["players"])
 async def get_players():
     cursor.execute("""SELECT * FROM players""")
     records = cursor.fetchall()
-    return {"data": records}
+    results = [
+        Player(
+            id=i[0],
+            player=i[1],
+            position=i[2],
+            value_score=i[3],
+            adp=i[4],
+            sleeper_score=i[5],
+        )
+        for i in records
+    ]
+    return {"data": results}
