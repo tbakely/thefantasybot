@@ -10,8 +10,8 @@ assist with drafts and potential offseason moves.
 ## Roadmap
 
 - [ ] Add fantasy web scraper to the repo
-- [ ] Add initial API endpoints to retrieve the complete list of eligible fantasy players
-- [ ] Add initial Vue.js framework to fetch data from the above API endpoint
+- [X] Add initial API endpoints to retrieve the complete list of eligible fantasy players
+- [X] Add initial Vue.js framework to fetch data from the above API endpoint
 - [ ] Initialize web server to host the github repository
 - [ ] Potentially add a domain name for the web server
 
