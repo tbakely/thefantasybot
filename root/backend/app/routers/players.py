@@ -30,4 +30,4 @@ async def get_players():
         )
         for i in records
     ]
-    return {"data": results}
+    return results

@@ -1,6 +1,11 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
 
-import './assets/main.css'
+// import './assets/main.css';
+import App from './App.vue';
+import ViewPlayers from './components/ViewPlayers.vue';
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.component('view-players', ViewPlayers);
+
+app.mount('#app');
