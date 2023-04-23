@@ -1,15 +1,12 @@
 <template>
-    <li>
-        <h2>{{ player }}</h2>
-        <ul>
-            <li><strong>ID:</strong> {{ id }}</li>
-            <li><strong>Player:</strong> {{ player }}</li>
-            <li><strong>Position:</strong> {{ position }}</li>
-            <li><strong>Value Score:</strong> {{ valueScore }}</li>
-            <li><strong>ADP:</strong> {{ adp }}</li>
-            <li><strong>Sleeper Score:</strong> {{ sleeperScore }}</li>
-        </ul>
-    </li>
+    <tr>
+        <td>{{ id }}</td>
+        <td>{{ player }}</td>
+        <td>{{ position }}</td>
+        <td>{{ valueScore }}</td>
+        <td>{{ adp }}</td>
+        <td>{{ sleeperScore }}</td>
+    </tr>
 </template>
   
 <script>

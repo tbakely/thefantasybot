@@ -1,15 +1,27 @@
 <template>
   <section>
     <header>
-      <h1>Fantasy Players</h1>
-      <button @click="getData">Load Players</button>
+      <h1>NFL Fantasy Draft Board - 2022</h1>
+      <!-- <button @click="getData">Load Players</button> -->
     </header>
 
-    <ul>
-      <view-players v-for="player in players" :key="player.id" :id="player.id" :player="player.player"
-        :position="player.position" :value-score="player.valueScore" :adp="player.adp"
-        :sleeper-score="player.sleeperScore"></view-players>
-    </ul>
+    <table id="player-data">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Player</th>
+          <th>Position</th>
+          <th>Value Score</th>
+          <th>ADP</th>
+          <th>Sleeper Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <view-players v-for="player in players" :key="player.id" :id="player.id" :player="player.player"
+          :position="player.position" :value-score="player.valueScore" :adp="player.adp"
+          :sleeper-score="player.sleeperScore"></view-players>
+      </tbody>
+    </table>
   </section>
 </template>
 
@@ -65,18 +77,24 @@ export default {
       });
     }
   },
+  beforeMount() {
+    this.getData();
+  },
 }
 </script>
 
-@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: "Jost", sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background-color: white;
+  font-size: 0.9rem;
 }
 
 body {
@@ -93,6 +111,43 @@ header {
   text-align: center;
   width: 90%;
   max-width: 40rem;
+}
+
+table {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.26);
+  margin: 3rem auto;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  width: 100%;
+  max-width: 40rem;
+  border-collapse: collapse;
+}
+
+tr {
+  padding: 8px;
+  border: 1px solid rgba(221, 221, 221, 0.193);
+  background-color: #58004d;
+}
+
+td {
+  /* border: 1px solid #ddd; */
+  padding: 1rem;
+}
+
+th {
+  /* border: 1px solid #ddd; */
+  padding: 12px;
+  background-color: #cbc3ca;
+  color: #5f505d;
+}
+
+#player-data tr:nth-child(even) {
+  background-color: #65225c
+}
+
+#player-data tr:hover {
+  background-color: #940386;
 }
 
 #app ul {
