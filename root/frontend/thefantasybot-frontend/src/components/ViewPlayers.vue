@@ -1,11 +1,12 @@
 <template>
-    <tr>
+    <tr :class="{ checked: drafted }">
         <td>{{ id }}</td>
         <td>{{ player }}</td>
         <td>{{ position }}</td>
         <td>{{ valueScore }}</td>
         <td>{{ adp }}</td>
         <td>{{ sleeperScore }}</td>
+        <td><input type="checkbox" @click="toggleDrafted" :checked="drafted"></td>
     </tr>
 </template>
   
@@ -36,8 +37,12 @@ export default {
             type: Number,
             required: true
         },
+        drafted: {
+            type: Boolean,
+            required: true
+        },
     },
-    emits: ['toggle-favorite', 'delete'],
+    emits: ['toggle-drafted'],
     //   emits: {
     //     'toggle-favorite': function(id) {
     //         if (id) {
@@ -51,6 +56,7 @@ export default {
     data() {
         return {
             detailsAreVisible: false,
+            isDrafted: true,
         };
     },
     methods: {
@@ -60,7 +66,12 @@ export default {
         toggleFavorite() {
             this.$emit('toggle-favorite', this.id);
         },
+        toggleDrafted() {
+            this.$emit('toggle-drafted', this.id);
+        }
     },
 };
 </script>
+
+<style></style>
   
