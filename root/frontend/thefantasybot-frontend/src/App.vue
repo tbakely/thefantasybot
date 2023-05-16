@@ -4,6 +4,9 @@
       <h1>NFL Fantasy Draft Board - 2022</h1>
       <button @click="togglePlayers">Show Players</button>
       <button @click="toggleSearch">Search Results</button>
+      <button @click="showDrafted">Toggle Drafted Players</button>
+      <p>Snake Draft Position: {{ this.playerNumber }}</p>
+      <p>Pick Number: {{ overallPick }}</p>
     </header>
     <!-- <form v-if="isSearched" @submit.prevent="searchPlayer(searchInput)> -->
     <form v-if="isSearched">
@@ -63,7 +66,25 @@
       <tbody>
         <view-players v-for="player in playersList" :key="player.id" :id="player.id" :player="player.player"
           :position="player.position" :value-score="player.valueScore" :adp="player.adp"
-          :sleeper-score="player.sleeperScore" :drafted="player.drafted"
+          :sleeper-score="player.sleeperScore" :tier="player.tier" :drafted="player.drafted"
+          @toggle-drafted="toggleDrafted($event)"></view-players>
+      </tbody>
+    </table>
+
+    <table class="player-data">
+      <thead>
+        <tr class="row">
+          <th v-for="col in columns" @click="sortTable(col)"><span class="text">{{ col }}</span><span
+              class="arrow-container"><span v-if="sortColumn === col" class="arrow"
+                :class="ascending ? 'arrow-up' : 'arrow-down'"></span></span>
+          </th>
+          <th>Drafted</th>
+        </tr>
+      </thead>
+      <tbody>
+        <view-players v-for="player in draftedList" :key="player.id" :id="player.id" :player="player.player"
+          :position="player.position" :value-score="player.valueScore" :adp="player.adp"
+          :sleeper-score="player.sleeperScore" :tier="player.tier" :drafted="player.drafted"
           @toggle-drafted="toggleDrafted($event)"></view-players>
       </tbody>
     </table>
@@ -81,7 +102,8 @@ export default {
     return {
       players: [],
       searched: [],
-      columns: ['id', 'player', 'position', 'valueScore', 'adp', 'sleeperScore'],
+      draftedPlayers: [],
+      columns: ['id', 'player', 'position', 'valueScore', 'adp', 'sleeperScore', 'tier'],
       isActive: true,
       isSearched: true,
       searchInput: '',
@@ -89,6 +111,10 @@ export default {
       ascending: false,
       sortColumn: '',
       arrowVisible: false,
+      playerNumber: 1,
+      snakeForward: true,
+      overallPick: 1,
+      notDrafted: true,
     }
   },
   methods: {
@@ -108,6 +134,7 @@ export default {
             valueScore: data[id].value_score,
             adp: data[id].adp,
             sleeperScore: data[id].sleeper_score,
+            tier: data[id].tier,
             drafted: data[id].drafted
           });
         }
@@ -137,6 +164,8 @@ export default {
     // },
     toggleDrafted(id) {
       this.players[id].drafted = !this.players[id].drafted;
+      this.snakeCount();
+      this.overallPick++;
     },
     togglePlayers() {
       this.isActive = !this.isActive;
@@ -167,6 +196,23 @@ export default {
         }
         return 0;
       })
+    },
+    snakeCount() {
+      if (this.snakeForward && this.playerNumber < 12) {
+        this.playerNumber++;
+      }
+      else if (this.snakeForward && this.playerNumber === 12) {
+        this.snakeForward = false;
+      }
+      else if (this.snakeForward === false && this.playerNumber === 1) {
+        this.snakeForward = true;
+      }
+      else {
+        this.playerNumber--;
+      }
+    },
+    showDrafted() {
+      this.notDrafted = !this.notDrafted;
     }
   },
   computed: {
@@ -182,7 +228,13 @@ export default {
         return this.players.filter((player) => player.player.toLowerCase().includes
           (this.searchInput.trim().toLowerCase()))
       }
+      else if (this.notDrafted) {
+        return this.players.filter((player) => player.drafted === false)
+      }
       return this.players
+    },
+    draftedList() {
+      return this.players.filter((player) => player.drafted)
     }
   },
   beforeMount() {
@@ -251,8 +303,11 @@ table {
   color: white;
   text-align: center;
   width: 100%;
-  max-width: 50rem;
+  max-width: 60rem;
   border-collapse: collapse;
+  /* height: 500px;
+  overflow-y: scroll;
+  display: block; */
 }
 
 tr {
@@ -269,7 +324,8 @@ td {
   /* border: 1px solid #ddd; */
   padding: 1rem;
   border-right: 1px solid;
-  border-color: #9c949b
+  border-color: #9c949b;
+  width: 10rem;
 }
 
 th {
@@ -279,6 +335,7 @@ th {
   padding: 12px;
   background-color: #cbc3ca;
   color: #5f505d;
+  width: 10rem;
 }
 
 /* th:nth-child(2n) {

@@ -6,6 +6,7 @@
         <td>{{ valueScore }}</td>
         <td>{{ adp }}</td>
         <td>{{ sleeperScore }}</td>
+        <td>{{ tier }}</td>
         <td><input type="checkbox" @click="toggleDrafted" :checked="drafted"></td>
     </tr>
 </template>
@@ -34,6 +35,10 @@ export default {
             required: true,
         },
         sleeperScore: {
+            type: Number,
+            required: true
+        },
+        tier: {
             type: Number,
             required: true
         },

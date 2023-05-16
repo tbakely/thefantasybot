@@ -9,17 +9,18 @@ while True:
         file_path = (
             "/Users/tylerbakely/Desktop/repos/thefantasybot/root/backend/app/data/"
         )
-        with open(os.path.join(file_path, "draftboard_standard.json"), "r") as f:
+        with open(os.path.join(file_path, "draftboard_STD.json"), "r") as f:
             data = json.load(f)
 
             player_data = [
                 Player(
                     id=id,
-                    player=player["PLAYER"],
-                    position=player["POS"],
+                    player=player["Player"],
+                    position=player["Position"],
                     value_score=player["VOR Rank"],
                     adp=player["ADP Rank"],
                     sleeper_score=player["Sleeper Score"],
+                    tier=player["Tier"],
                 )
                 for id, player in enumerate(data)
             ]
