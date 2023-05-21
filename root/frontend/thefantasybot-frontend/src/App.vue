@@ -7,6 +7,7 @@
       <button @click="showDrafted">Toggle Drafted Players</button>
       <p>Snake Draft Position: {{ this.playerNumber }}</p>
       <p>Pick Number: {{ overallPick }}</p>
+      <p>{{ draftOrder }}</p>
     </header>
     <!-- <form v-if="isSearched" @submit.prevent="searchPlayer(searchInput)> -->
     <form v-if="isSearched">
@@ -115,6 +116,7 @@ export default {
       snakeForward: true,
       overallPick: 1,
       notDrafted: true,
+      draftOrder: []
     }
   },
   methods: {
@@ -163,7 +165,11 @@ export default {
     //   });
     // },
     toggleDrafted(id) {
+      const player = this.players[id]
       this.players[id].drafted = !this.players[id].drafted;
+      player.teamNo = this.playerNumber;
+      player.overallPick = this.overallPick
+      this.draftOrder.push(player);
       this.snakeCount();
       this.overallPick++;
     },
