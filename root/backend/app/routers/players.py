@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, Request
-from app.schemas import Player
+from schemas import Player
 from typing import List
 import pandas as pd
 import os
@@ -72,6 +72,13 @@ async def make_draft_pick(players: List[dict]):
         "TE": 0,
     }
 
+    starter_map = {
+        "RB": 2,
+        "WR": 2,
+        "QB": 1,
+        "TE": 1,
+    }
+
     ids_player_data = [player.id for player in player_data]
     ids_drafted = [player["id"] for player in players]
     snake_pick = snake_picks()
@@ -89,21 +96,66 @@ async def make_draft_pick(players: List[dict]):
         position = player["position"]
         roster_map[position] += 1
 
-    def recommended(player_ids: List[int]):
-        available = [player for player in player_data if player.id in player_ids]
+    available = [player for player in player_data if player.id in id_available]
+    if len(current_roster_ids) == 0:
         recommend = min(available, key=lambda x: x.value_score)
-        return recommend
-
-    result = recommended(id_available)
+        picks_to_survive = 0
+    elif len(current_roster_ids) < len(snake_pick[1]) - 1:
+        while available:
+            first_check = min(available, key=lambda x: x.value_score)
+            remaining_in_tier = [
+                player
+                for player in available
+                if player.tier == first_check.tier
+                and player.position == first_check.position
+            ]
+            picks_to_survive = (
+                max([remaining.adp for remaining in remaining_in_tier])
+                - currentPick
+                - 1
+            )
+            if first_check.position != "RB" and roster_map["RB"] >= starter_map["RB"]:
+                if (
+                    first_check.position != "WR"
+                    and roster_map["WR"] >= starter_map["WR"]
+                ):
+                    if (
+                        first_check.position != "QB"
+                        and roster_map["QB"] < starter_map["QB"]
+                    ):
+                        if picksBetweenNext < picks_to_survive:
+                            available.pop(0)
+                        else:
+                            recommend = first_check
+                            break
+                elif (
+                    first_check.position != "WR"
+                    and roster_map["WR"] < starter_map["WR"]
+                ):
+                    if picksBetweenNext < picks_to_survive:
+                        available.pop(0)
+                    else:
+                        recommend = first_check
+                        break
+            elif first_check.position != "RB" and roster_map["RB"] < starter_map["RB"]:
+                if picksBetweenNext < picks_to_survive:
+                    available.pop(0)
+                else:
+                    recommend = first_check
+                    break
+            else:
+                recommend = first_check
+                break
 
     return {
         "message": "It worked!",
-        "the-pick-is-in": f"Based on your current roster, we recommend you to pick {result.player}.",
-        "player-best-valuescore": result,
+        "the_pick": f"Based on your current roster, we recommend {recommend.player}.",
+        "player-best-valuescore": recommend,
         "current-pick": currentPick,
         "current-round": currentRound,
         "current-drafter": currentDrafter,
         "drafter-next-pick": drafterNextPick,
+        "picks-to-survive": picks_to_survive,
         "picks-between-next-pick": picksBetweenNext,
         "current-roster-ids": current_roster_ids,
         "roster": roster,
