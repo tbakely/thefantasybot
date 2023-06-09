@@ -14,14 +14,19 @@ body {
 
 header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-    margin: 3rem auto;
+    margin: 1rem auto;
     border-radius: 10px;
     padding: 1rem;
     background-color: #58004d;
     color: white;
     text-align: center;
-    width: 90%;
+    width: 70%;
     max-width: 40rem;
+    display: inline-block;
+    width: 500px;
+    height: 270px;
+    position: relative;
+    left: 20px;
 }
 
 form {
@@ -132,6 +137,10 @@ tr.checked:hover {
     -webkit-transform: rotate(45deg);
 }
 
+.table-header {
+    font-size: 1.5rem;
+}
+
 
 /* .player-data tr:nth-child(even) {
     background-color: #65225c
@@ -150,8 +159,14 @@ tr.checked:hover {
     border-radius: 10px;
     padding: 1rem;
     text-align: center;
-    width: 90%;
-    max-width: 40rem;
+    width: 50%;
+    max-width: 60rem;
+    display: inline-block;
+    width: 300px;
+    height: 150px;
+    position: relative;
+    top: -90px;
+    left: 40px;
 }
 
 #app h2 {
@@ -168,6 +183,7 @@ tr.checked:hover {
     background-color: #ff0077;
     color: white;
     padding: 0.05rem 1rem;
+    margin: 5px;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
 }
 
@@ -187,9 +203,14 @@ tr.checked:hover {
     font-weight: bold;
     margin-right: 1rem;
     width: 7rem;
-    display: inline-block;
 }
 
 #app form div {
     margin: 1rem 0;
+}
+
+#div-header {
+    max-width: 60rem;
+    margin: auto;
+    height: 300px;
 }

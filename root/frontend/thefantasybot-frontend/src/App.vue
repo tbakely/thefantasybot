@@ -1,40 +1,45 @@
 <template>
   <section>
-    <header>
-      <h1>NFL Fantasy Draft Board - 2023</h1>
-      <button @click="togglePlayers">Show Players</button>
-      <button @click="toggleSearch">Toggle Search</button>
-      <button @click="showDrafted">Show Drafted Players</button>
-      <button @click="showMyDrafted">Show My Drafted Players</button>
-      <button @click="sendPlayers">Suggest Pick</button>
-      <button @click="toggleDebug">Debug Mode</button>
-      <p>My Snake Position: {{ snakePosition }}</p>
-      <select v-if="debugMode" v-model="snakePosition">
-        <option v-for="num in 12">{{ num }}</option>
-      </select>
-      <p>Current Snake Position: {{ this.playerNumber }}</p>
-      <p v-if="debugMode">Pick Number: {{ overallPick }}</p>
-      <p v-if="debugMode">{{ draftOrder }}</p>
-    </header>
+    <div id="div-header">
+      <header>
+        <h1>NFL Fantasy Draft Board - 2023</h1>
+        <button @click="togglePlayers">Show Players</button>
+        <button @click="toggleSearch">Toggle Search</button>
+        <button @click="showDrafted">Show Drafted Players</button>
+        <button @click="showMyDrafted">Show My Drafted Players</button>
+        <button @click="sendPlayers">Suggest Pick</button>
+        <!-- <button @click="toggleDebug">Debug Mode</button> -->
+        <p>My Snake Position: {{ snakePosition }}</p>
+        <select v-if="debugMode" v-model="snakePosition">
+          <option v-for="num in 12">{{ num }}</option>
+        </select>
+        <p>Current Snake Position: {{ this.playerNumber }}</p>
+        <p>Draft Board Scoring System: {{ this.scoring }}</p>
+        <p v-if="debugMode">Pick Number: {{ overallPick }}</p>
+        <p v-if="debugMode">{{ draftOrder }}</p>
+      </header>
 
-    <form v-if="isSearched">
-      <label>Filter by Position:</label>
-      <select id="search" v-model="filterBy">
-        <option>All</option>
-        <option>QB</option>
-        <option>WR</option>
-        <option>RB</option>
-        <option>TE</option>
-      </select>
-      <input type="text" class="input-box" placeholder="Enter Player Name" v-model="searchInput" />
-    </form>
+      <form v-if="isSearched">
+        <label>Filter by Position:</label>
+        <select id="search" v-model="filterBy">
+          <option>All</option>
+          <option>QB</option>
+          <option>WR</option>
+          <option>RB</option>
+          <option>TE</option>
+        </select>
+        <input type="text" class="input-box" placeholder="Enter Player Name" v-model="searchInput" />
+      </form>
+    </div>
 
     <table class="player-data" v-if="draftedTeam">
       <thead>
+        <tr>
+          <th class="table-header" colspan="8">My Roster</th>
+        </tr>
         <tr class="row">
-          <th v-for="col in columns" @click="sortTable(col)"><span class="text">{{ col }}</span><span
-              class="arrow-container"><span v-if="sortColumn === col" class="arrow"
-                :class="ascending ? 'arrow-up' : 'arrow-down'"></span></span>
+          <th v-for="col in columns"><span class="text">{{ col }}</span><span class="arrow-container"><span
+                v-if="sortColumn === col" class="arrow" :class="ascending ? 'arrow-up' : 'arrow-down'"></span></span>
           </th>
           <th>Drafted</th>
         </tr>
@@ -48,10 +53,12 @@
 
     <table class="player-data" v-if="isActive">
       <thead>
+        <tr>
+          <th class="table-header" colspan="8">Draft Board</th>
+        </tr>
         <tr class="row">
-          <th v-for="col in columns" @click="sortTable(col)"><span class="text">{{ col }}</span><span
-              class="arrow-container"><span v-if="sortColumn === col" class="arrow"
-                :class="ascending ? 'arrow-up' : 'arrow-down'"></span></span>
+          <th v-for="col in columns"><span class="text">{{ col }}</span><span class="arrow-container"><span
+                v-if="sortColumn === col" class="arrow" :class="ascending ? 'arrow-up' : 'arrow-down'"></span></span>
           </th>
           <th>Drafted</th>
         </tr>
@@ -66,10 +73,12 @@
 
     <table class="player-data">
       <thead>
+        <tr>
+          <th class="table-header" colspan="8">Drafted Players</th>
+        </tr>
         <tr class="row">
-          <th v-for="col in columns" @click="sortTable(col)"><span class="text">{{ col }}</span><span
-              class="arrow-container"><span v-if="sortColumn === col" class="arrow"
-                :class="ascending ? 'arrow-up' : 'arrow-down'"></span></span>
+          <th v-for="col in columns"><span class="text">{{ col }}</span><span class="arrow-container"><span
+                v-if="sortColumn === col" class="arrow" :class="ascending ? 'arrow-up' : 'arrow-down'"></span></span>
           </th>
           <th>Drafted</th>
         </tr>
@@ -113,11 +122,12 @@ export default {
       debugMode: false,
       snakePosition: 1,
       draftedTeam: false,
+      scoring: "STD",
     }
   },
   methods: {
-    getData() {
-      fetch("http://0.0.0.0:8000/players/").then((response) => {
+    getData(scoring = this.scoring) {
+      fetch(`http://0.0.0.0:8000/players/?scoring=${scoring}`).then((response) => {
         if (response.ok) {
           return response.json();
         }
@@ -149,7 +159,7 @@ export default {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.draftOrder)
         };
-        const response = await fetch("http://0.0.0.0:8000/players/draft-pick", requestOptions);
+        const response = await fetch(`http://0.0.0.0:8000/players/draft-pick?scoring=${this.scoring}`, requestOptions);
         const data = await response.json();
         this.suggestedPick = data.the_pick;
         alert(this.suggestedPick);
@@ -251,9 +261,11 @@ export default {
     }
   },
   beforeMount() {
-    this.getData();
-    // const mySnakePosition = prompt("Enter your snake draft position.");
-    // this.snakePosition = mySnakePosition;
+    const mySnakePosition = prompt("Enter your snake draft position.");
+    const myScoring = prompt("Enter the scoring system: STD, HALF, or PPR.");
+    this.snakePosition = mySnakePosition;
+    this.scoring = myScoring;
+    this.getData(this.scoring);
   },
 }
 </script>

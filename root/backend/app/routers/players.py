@@ -23,25 +23,32 @@ def snake_picks(number_of_teams=12, rounds=16):
 
 
 while True:
+    scoring_type = ["STD", "PPR", "HALF"]
+    player_data_all = {}
     try:
+        scoring_type = ["STD", "PPR", "HALF"]
+        player_data_all = {}
         file_path = (
             "/Users/tylerbakely/Desktop/repos/thefantasybot/root/backend/app/data/"
         )
-        with open(os.path.join(file_path, "draftboard_STD.json"), "r") as f:
-            data = json.load(f)
+        for scoring in scoring_type:
+            with open(os.path.join(file_path, f"draftboard_{scoring}.json"), "r") as f:
+                data = json.load(f)
 
-            player_data = [
-                Player(
-                    id=id,
-                    player=player["Player"],
-                    position=player["Position"],
-                    value_score=player["VOR Rank"],
-                    adp=player["ADP Rank"],
-                    sleeper_score=player["Sleeper Score"],
-                    tier=player["Tier"],
-                )
-                for id, player in enumerate(data)
-            ]
+                player_data = [
+                    Player(
+                        id=id,
+                        player=player["Player"],
+                        position=player["Position"],
+                        value_score=player["VOR Rank"],
+                        adp=player["ADP Rank"],
+                        sleeper_score=player["Sleeper Score"],
+                        tier=player["Tier"],
+                    )
+                    for id, player in enumerate(data)
+                ]
+
+                player_data_all[scoring] = player_data
         print("Player data loaded successfully.")
         break
     except Exception as error:
@@ -53,8 +60,8 @@ router = APIRouter(prefix="/players", tags=["players"])
 
 
 @router.get("/", response_model=list[Player])
-async def get_players():
-    return player_data
+async def get_players(scoring="STD"):
+    return player_data_all[scoring]
 
 
 @router.get("/{id}")
@@ -64,7 +71,8 @@ async def get_player_by_id(id: int):
 
 
 @router.post("/draft-pick")
-async def make_draft_pick(players: List[dict]):
+async def make_draft_pick(players: List[dict], scoring="STD"):
+    player_data = player_data_all[scoring]
     roster_map = {
         "RB": 0,
         "WR": 0,
