@@ -8,3 +8,5 @@ class Player(BaseModel):
     value_score: int
     adp: int
     sleeper_score: int
+    tier: int
+    drafted: bool = False

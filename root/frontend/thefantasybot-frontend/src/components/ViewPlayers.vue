@@ -1,15 +1,14 @@
 <template>
-    <li>
-        <h2>{{ player }}</h2>
-        <ul>
-            <li><strong>ID:</strong> {{ id }}</li>
-            <li><strong>Player:</strong> {{ player }}</li>
-            <li><strong>Position:</strong> {{ position }}</li>
-            <li><strong>Value Score:</strong> {{ valueScore }}</li>
-            <li><strong>ADP:</strong> {{ adp }}</li>
-            <li><strong>Sleeper Score:</strong> {{ sleeperScore }}</li>
-        </ul>
-    </li>
+    <tr :class="{ checked: drafted }">
+        <td>{{ id }}</td>
+        <td>{{ player }}</td>
+        <td>{{ position }}</td>
+        <td>{{ valueScore }}</td>
+        <td>{{ adp }}</td>
+        <td>{{ sleeperScore }}</td>
+        <td>{{ tier }}</td>
+        <td><input type="checkbox" @click="toggleDrafted" :checked="drafted"></td>
+    </tr>
 </template>
   
 <script>
@@ -39,21 +38,20 @@ export default {
             type: Number,
             required: true
         },
+        tier: {
+            type: Number,
+            required: true
+        },
+        drafted: {
+            type: Boolean,
+            required: true
+        },
     },
-    emits: ['toggle-favorite', 'delete'],
-    //   emits: {
-    //     'toggle-favorite': function(id) {
-    //         if (id) {
-    //             return true;
-    //         } else {
-    //             console.warn('Id is missing!')
-    //             return false;
-    //         }
-    //     },
-    //   },
+    emits: ['toggle-drafted'],
     data() {
         return {
             detailsAreVisible: false,
+            isDrafted: true,
         };
     },
     methods: {
@@ -63,7 +61,12 @@ export default {
         toggleFavorite() {
             this.$emit('toggle-favorite', this.id);
         },
+        toggleDrafted() {
+            this.$emit('toggle-drafted', this.id);
+        }
     },
 };
 </script>
+
+<style></style>
   
