@@ -9,7 +9,10 @@
    <h1>Fantasy Football Helper App</h1>
 
 A complete single page application using a REST API for the backend and Vue.js for the frontend. I do not intend for this to be a long-term project that I will productionalize and release, but it has been a valuable way for me to learn web frameworks, REST APIs, HTTP Requests, and advanced Python techniques. I encourage anyone who enjoys this app to fork and develop for your own use.
+   <br><br>
+   <img src="https://s12.gifyu.com/images/Sutcd.gif">
 </div>
+
 
 ## Description
 This is a free alternative to other paid fantasy subscriptions that help guide you through your fantasy football drafts. The Fantasy Football Helper App pulls in data from fantasypros.com using a custom built web scraping process. The process includes a value based method to rank players using ADP (Average Draft Position) and VOR (Value Over Replacement), as well as a single feature GMM tiering method (Gaussian Mixture Modeling) for position groups. I will push the up to date player data to the repo as needed when I test it this upcoming season.
