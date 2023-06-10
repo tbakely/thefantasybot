@@ -8,16 +8,18 @@
 <div align="center">
    <h1>Fantasy Football Helper App</h1>
 
-A complete single page application using a REST API for the backend and Vue.js for the frontend. I do not intend for this to be a long-term project that I will productionalize and release, but it has been a valuable way for me to learn web frameworks, REST APIs, HTTP Requests, and advanced Python techniques. I encourage anyone who enjoys this app to fork and develop for your own use.
+A complete single page application using a REST API for the backend and Vue.js for the frontend. I do not intend for this to be a long-term project, but it has been a valuable way for me to learn web frameworks, REST APIs, HTTP Requests, and advanced Python techniques.
    <br><br>
    <img src="https://s12.gifyu.com/images/Sutcd.gif">
 </div>
 
 
 ## Description
-This is a free alternative to other paid fantasy subscriptions that help guide you through your fantasy football drafts. The Fantasy Football Helper App pulls in data from fantasypros.com using a custom built web scraping process. The process includes a value based method to rank players using ADP (Average Draft Position) and VOR (Value Over Replacement), as well as a single feature GMM tiering method (Gaussian Mixture Modeling) for position groups. I will push the up to date player data to the repo as needed when I test it this upcoming season.
+This is a free alternative to other paid fantasy subscriptions that help guide you through your fantasy football drafts. The Fantasy Football Helper App pulls in data from fantasypros.com using a web scraping process. The process includes a value based method to rank players using ADP (Average Draft Position) and VOR (Value Over Replacement), as well as a single feature GMM tiering method (Gaussian Mixture Modeling) for position groups. I will push the up to date player data to the repo as needed when I test it this upcoming season.
 
-The Vue.js frontend server and FastAPI backend server will need to be launched prior to using. The frontend web page will ask for your snake draft position (currently built for 12 teams only but can be adjusted in the code), and then the type of scoring you would like to use (STD for Standard, HALF for Half PPR, and PPR for Full PPR).
+The Vue.js frontend dev server and FastAPI backend server will need to be launched prior to using the app. The frontend web page will ask for your snake draft position (currently built for 12 teams only but can be adjusted in the code), and then the type of scoring you would like to use (STD for Standard, HALF for Half PPR, and PPR for Full PPR).
+
+Please note that there are bugs and the code isn't completely cleaned or optimized.
 
 ### Built With
 
@@ -53,10 +55,23 @@ The Vue.js frontend server and FastAPI backend server will need to be launched p
 3. Enter the frontend server domain in your browser if it does not launch automatically e.g. http://localhost:5174/
 4. You will have to enter two prompts when the page launches, the first is the snake order position you are drafting (pick 1-12) and then the type of scoring your fantasy league is using (STD, HALF, or PPR).
 5. When your fantasy draft starts, use the checkbox under the "Draft Board" table to CAREFULLY select each player that has been drafted before, during, and after your pick all the way to the end of the draft.
-6. When it is your time to pick, the broswer will alert you and let you use the "Suggest Pick" button. If you try to use "Suggest Pick" when it is not your turn, the browser will alert you.
+6. When it is your time to pick, the browser will alert you and let you use the "Suggest Pick" button. If you try to use "Suggest Pick" when it is not your turn, the browser will alert you.
+
+#### Button Functions
+
+* Show Players
+    * Toggle button that hides and shows the Draft Board table
+* Toggle Search
+    * Hides and shows the player filter and search form
+* Show Drafted Players
+    * Hides and shows the Drafted Players table (below the Draft Board table)
+* Show My Drafted Players
+    * Shows and hides the your currently drafted roster
+* Suggest Pick
+    * Sends a POST request with a list of dictionaries containing the already drafted players to the FastAPI /players/draft-pick node and returns the recommended pick based on your current roster
 
 <!-- BUGS -->
-### Current Bugs (as of 6/9/2023)
+### Current Bugs
 
 - The ascending/descending sorting function in App.vue is currently disabled because it causes the player selection to not work correctly. Low priority
 - Cannot undo drafting a player once they've been selected without advancing the overall draft pick number. Be careful when drafting, as misclicking a player will require you to restart the app in order to not mess up the backend algorithm.
@@ -64,28 +79,6 @@ The Vue.js frontend server and FastAPI backend server will need to be launched p
 - The recommendation algorithm in players.py is still a work in progress and may not suggest the most optimal player after all starters have been drafted.
 - There are a few other bugs that I can't think of at the moment, but they do not affect the main purpose of the app. I will add to this list as I encounter them.
 
-### Authors
-
-Contributors names and contact info
-
-* Tyler Bakely
-* SOON TM CONTACT INFO SOON TM
-
-### Version History
-
-* 0.01
-    * Initial repo setup
-* 0.1
-    * First release (6/9/2023)
-
-### License
-
-* SOON TM
-
-### Acknowledgments
-
-Inspiration, code snippets, etc.
-* SOON TM
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

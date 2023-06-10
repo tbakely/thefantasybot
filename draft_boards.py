@@ -203,6 +203,4 @@ def pull_draft_boards(output_path: str = None):
 
 
 if __name__ == "__main__":
-    pull_draft_boards(
-        "/Users/tylerbakely/Desktop/repos/thefantasybot/root/backend/app/data/"
-    )
+    pull_draft_boards(os.path.join(os.getcwd(), "root/backend/app/data/"))
