@@ -19,7 +19,7 @@ This is a free alternative to other paid fantasy subscriptions that help guide y
 
 The Vue.js frontend dev server and FastAPI backend server will need to be launched prior to using the app. The frontend web page will ask for your snake draft position (currently built for 12 teams only but can be adjusted in the code), and then the type of scoring you would like to use (STD for Standard, HALF for Half PPR, and PPR for Full PPR).
 
-Please note that there are bugs and the code isn't completely cleaned or optimized.
+Please note that there are bugs and the code isn't completely cleaned or optimized. Also the recommendation algorithm could use some tweaking to be more accurate and intuitive. Hopefully there will be good testing data this season!
 
 ### Built With
 
@@ -82,16 +82,16 @@ Please note that there are bugs and the code isn't completely cleaned or optimiz
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/tylerbakely/thefantasybot.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/tbakely/thefantasybot.svg?style=for-the-badge
 [contributors-url]: https://github.com/tylerbakely/thefantasybot/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/tylerbakely/thefantasybot.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/tbakely/thefantasybot.svg?style=for-the-badge
 [forks-url]: https://github.com/tylerbakely/thefantasybot/network/members
-[stars-shield]: https://img.shields.io/github/stars/tylerbakely/thefantasybot.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/tbakely/thefantasybot.svg?style=for-the-badge
 [stars-url]: https://github.com/tylerbakely/thefantasybot/stargazers
-[issues-shield]: https://img.shields.io/github/issues/tylerbakely/thefantasybot.svg?style=for-the-badge
-[issues-url]: https://github.com/tylerbakely/thefantasybot/issues
+[issues-shield]: https://img.shields.io/github/issues/tbakely/thefantasybot.svg?style=for-the-badge
+[issues-url]: https://github.com/tbakely/thefantasybot/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/tylerbakely
+[linkedin-url]: https://linkedin.com/in/tbakely
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
 [FastAPI]: https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white
