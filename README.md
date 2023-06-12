@@ -19,6 +19,8 @@ This is a free alternative to other paid fantasy subscriptions that help guide y
 
 The Vue.js frontend dev server and FastAPI backend server will need to be launched prior to using the app. The frontend web page will ask for your snake draft position (currently built for 12 teams only but can be adjusted in the code), and then the type of scoring you would like to use (STD for Standard, HALF for Half PPR, and PPR for Full PPR).
 
+When the page is loaded with the above entered information, you can start following your fantasy football draft and check off each player as they are drafted. For instance, if you are drafting 3rd overall, you will need to record the first two picks, and each pick after until your pick comes up again. When it is your turn to pick, you can select the "Suggest Pick" button and the frontend server will send a list of dictionaries containing the drafted players to the backend API at "/players/draft-pick". The API will send a json response back containing the recommended player to draft based on your current roster.
+
 Please note that there are bugs and the code isn't completely cleaned or optimized. Also the recommendation algorithm could use some tweaking to be more accurate and intuitive. Hopefully there will be good testing data this season!
 
 ### Built With
@@ -26,19 +28,26 @@ Please note that there are bugs and the code isn't completely cleaned or optimiz
 [![Vue][Vue.js]][Vue-url]
 [![FastAPI][FastAPI]][FastAPI-url]
 
+### Requirements
+
+* Python 3.6 or higher
+* IDE of your choice
+* <a href="https://nodejs.org/en/download">Node.js</a> (Needed in order to run the npm commands in the installation)
+
 ### Installation
 
 1. Clone the repo
    ```sh
    git clone https://github.com/tylerbakely/thefantasybot.git
    ```
-2. Install NPM packages
+2. Change directory to the cloned repository and install required python packages
    ```sh
-   npm install vue-cli
-   ```
-3. Install python packages
-   ```sh
+   cd thefantasybot
    pip install -r requirements.txt
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
    ```
 
 ### How To Use
@@ -47,15 +56,19 @@ Please note that there are bugs and the code isn't completely cleaned or optimiz
    ```sh
    python draft_boards.py
    ```
-2. Launch the frontend and backend servers
+2. Launch the backend server
    ```sh
-   npm run dev
    python root/backend/app/main.py
    ```
-3. Enter the frontend server domain in your browser if it does not launch automatically e.g. http://localhost:5174/
-4. You will have to enter two prompts when the page launches, the first is the snake order position you are drafting (pick 1-12) and then the type of scoring your fantasy league is using (STD, HALF, or PPR).
-5. When your fantasy draft starts, use the checkbox under the "Draft Board" table to CAREFULLY select each player that has been drafted before, during, and after your pick all the way to the end of the draft.
-6. When it is your time to pick, the browser will alert you and let you use the "Suggest Pick" button. If you try to use "Suggest Pick" when it is not your turn, the browser will alert you.
+3. Launch the frontend dev server
+   ```sh
+   cd root/frontend/thefantasybot-frontend
+   npm run dev
+   ```
+4. Enter the frontend server domain from the above step in your browser e.g. http://localhost:5174/
+5. You will have to enter two prompts when the page launches, the first is the snake order position you are drafting (pick 1-12) and then the type of scoring your fantasy league is using (STD, HALF, or PPR).
+6. When your fantasy draft starts, use the checkbox under the "Draft Board" table to CAREFULLY select each player that has been drafted before, during, and after your pick all the way to the end of the draft.
+7. When it is your time to pick, the browser will alert you and let you use the "Suggest Pick" button. If you try to use "Suggest Pick" when it is not your turn, the browser will alert you.
 
 #### Button Functions
 
@@ -78,6 +91,11 @@ Please note that there are bugs and the code isn't completely cleaned or optimiz
 - The player filter and search form will be layered on top of the draft board table if the screen is minimized too much. The CSS formatting was not properly planned out in advance since I was learning CSS on the fly. I will make updates eventually but it is low priority
 - The recommendation algorithm in players.py is still a work in progress and may not suggest the most optimal player after all starters have been drafted.
 - There are a few other bugs that I can't think of at the moment, but they do not affect the main purpose of the app. I will add to this list as I encounter them.
+
+<!-- LICENSE -->
+### License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- MARKDOWN LINKS & IMAGES -->

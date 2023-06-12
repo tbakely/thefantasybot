@@ -28,9 +28,7 @@ while True:
     try:
         scoring_type = ["STD", "PPR", "HALF"]
         player_data_all = {}
-        file_path = (
-            "/Users/tylerbakely/Desktop/repos/thefantasybot/root/backend/app/data/"
-        )
+        file_path = os.path.join(os.getcwd(), "data")
         for scoring in scoring_type:
             with open(os.path.join(file_path, f"draftboard_{scoring}.json"), "r") as f:
                 data = json.load(f)

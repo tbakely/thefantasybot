@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     getData(scoring = this.scoring) {
-      fetch(`http://0.0.0.0:8000/players/?scoring=${scoring}`).then((response) => {
+      fetch(`http://127.0.0.1:8000/players/?scoring=${scoring}`).then((response) => {
         if (response.ok) {
           return response.json();
         }
@@ -159,7 +159,7 @@ export default {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.draftOrder)
         };
-        const response = await fetch(`http://0.0.0.0:8000/players/draft-pick?scoring=${this.scoring}`, requestOptions);
+        const response = await fetch(`http://127.0.0.1:8000/players/draft-pick?scoring=${this.scoring}`, requestOptions);
         const data = await response.json();
         this.suggestedPick = data.the_pick;
         alert(this.suggestedPick);
