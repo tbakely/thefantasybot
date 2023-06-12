@@ -38,7 +38,7 @@ Please note that there are bugs and the code isn't completely cleaned or optimiz
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/tylerbakely/thefantasybot.git
+   git clone https://github.com/tbakely/thefantasybot.git
    ```
 2. Change directory to the cloned repository and install required python packages
    ```sh
@@ -101,11 +101,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/tbakely/thefantasybot.svg?style=for-the-badge
-[contributors-url]: https://github.com/tylerbakely/thefantasybot/graphs/contributors
+[contributors-url]: https://github.com/tbakely/thefantasybot/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/tbakely/thefantasybot.svg?style=for-the-badge
-[forks-url]: https://github.com/tylerbakely/thefantasybot/network/members
+[forks-url]: https://github.com/tbakely/thefantasybot/network/members
 [stars-shield]: https://img.shields.io/github/stars/tbakely/thefantasybot.svg?style=for-the-badge
-[stars-url]: https://github.com/tylerbakely/thefantasybot/stargazers
+[stars-url]: https://github.com/tbakely/thefantasybot/stargazers
 [issues-shield]: https://img.shields.io/github/issues/tbakely/thefantasybot.svg?style=for-the-badge
 [issues-url]: https://github.com/tbakely/thefantasybot/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
