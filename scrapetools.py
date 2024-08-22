@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup as bs
 import numpy as np
 import re
 
+pd.options.display.float_format = "{:.2f}".format
+
 
 def scrape_to_df(url: str, id: str, multilevel=False):
     res = requests.get(url)

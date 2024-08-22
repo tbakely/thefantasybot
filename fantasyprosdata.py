@@ -2,11 +2,15 @@ from scrapetools import *
 
 
 class FantasyProsData:
-    def __init__(self, scoring: str):
-        self.scoring = scoring
+    def __init__(self, scoring: str = None, dynasty: bool = False):
+        if dynasty:
+            self.scoring = "PPR"
+        else:
+            self.scoring = scoring
+        self.dynasty = dynasty
 
-        if not self.scoring in ["STD", "PPR", "HALF"]:
-            raise Exception("Scoring system must be STD, PPR, or HALF.")
+        if self.scoring is not None and not self.scoring in ["STD", "PPR", "HALF"]:
+            raise ValueError("Scoring system must be STD, PPR, or HALF.")
 
     def pull_adp(self):
         scoring_map = {
@@ -14,11 +18,16 @@ class FantasyProsData:
             "PPR": "ppr-overall",
             "HALF": "half-point-ppr-overall",
         }
-
-        df = scrape_to_df(
-            f"https://www.fantasypros.com/nfl/adp/{scoring_map[self.scoring]}.php",
-            "data",
-        )
+        if not self.dynasty:
+            df = scrape_to_df(
+                f"https://www.fantasypros.com/nfl/adp/{scoring_map[self.scoring]}.php",
+                "data",
+            )
+        else:
+            df = scrape_to_df(
+                f"https://www.fantasypros.com/nfl/adp/dynasty-overall.php",
+                "data",
+            )
 
         df["Player"] = df["Player Team (Bye)"].apply(
             lambda x: apply_regex(r"^([a-zA-Z'-.]+\s[a-zA-Z'-]+)(\s(IV|I{2,3}))?", x)
@@ -55,7 +64,7 @@ class FantasyProsData:
             )
             df["Player"] = df["Player"].apply(
                 lambda x: apply_regex(
-                    r"^([a-zA-Z'-.]+\s[a-zA-Z'-]+)(\s(IV|I{2,3}))?", x
+                    r"^([a-zA-Z'-.]+\s[a-zA-Z'-]+)([.]\s[a-zA-Z]+)?", x
                 )
             )
             df["Position"] = position.upper()

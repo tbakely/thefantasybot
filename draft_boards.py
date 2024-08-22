@@ -9,10 +9,18 @@ warnings.filterwarnings("ignore")
 
 
 class DraftBoard:
-    def __init__(self, scoring: str):
-        self.scoring = scoring
+    def __init__(self, scoring: str = None, dynasty: bool = False):
+        if scoring is not None and dynasty:
+            raise ValueError("Cannot select a scoring type when dynasty=True")
+        if dynasty:
+            self.scoring = "PPR"
+        else:
+            self.scoring = scoring
         self.projections = FantasyProsData(scoring).projected_points()
-        self.adp = FantasyProsData(scoring).pull_adp()
+        if not dynasty:
+            self.adp = FantasyProsData(scoring).pull_adp()
+        else:
+            self.adp = FantasyProsData(dynasty=dynasty).pull_adp()
 
     def tiering_players_all(self):
         def tiering_players_pos(pos: str):
@@ -86,11 +94,11 @@ class DraftBoard:
         complete_df = projections.merge(
             self.adp, how="left", on=["Player", "Position"]
         )[:200].dropna()
-        complete_df["ADP Rank"] = complete_df["ADP"].rank().astype(int)
+        complete_df["ADP Rank"] = complete_df["ADP"].rank(method="first").astype(int)
         complete_df["Sleeper Score"] = complete_df["ADP Rank"] - complete_df["VOR Rank"]
         complete_df = complete_df[
-            ["Player", "Position", "VOR Rank", "ADP Rank", "Sleeper Score"]
-        ]
+            ["Player", "Position", "VOR Rank", "ADP Rank"]
+        ].sort_values("ADP Rank")
 
         player_tiers = self.tiering_players_all()
 
